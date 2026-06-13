@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, Pressable } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 interface Props {
     label: string;
@@ -27,8 +28,14 @@ export default function FAB({ label, position = 'center', onPress, onLongPress }
         positionStyles[position],
         pressed ? { opacity: 0.5 } : { opacity: 1 }
       ]}
-      onPress={ onPress }
-      onLongPress={ onLongPress }
+      onPress={ () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+        onPress?.()
+      }}
+      onLongPress={ () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+        onLongPress?.()
+      }}
     >
       <Text style={{ color: 'white', fontSize: 20 }}> { label } </Text>
     </Pressable>
